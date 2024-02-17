@@ -18,7 +18,8 @@ import {
 } from "@/types/raffle";
 
 export function RafflePage() {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params.id
 
   const [stocks, setStocks] = useState<StocksProps>({ ...initialStateStocks });
   const { user } = useAuth();

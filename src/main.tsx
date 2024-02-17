@@ -9,15 +9,14 @@ import { RafflePage } from "./routes/raffle.tsx";
 import { ErrorPage } from "./routes/error.tsx";
 import { UserPage } from "./routes/user.tsx";
 import App from "./App.tsx";
-
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
+        index: true,
         element: <HomePage />,
       },
       {

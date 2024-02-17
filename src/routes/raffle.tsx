@@ -19,6 +19,7 @@ import {
 
 export function RafflePage() {
   const { id } = useParams();
+
   const [stocks, setStocks] = useState<StocksProps>({ ...initialStateStocks });
   const { user } = useAuth();
 

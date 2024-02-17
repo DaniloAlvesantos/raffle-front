@@ -73,7 +73,8 @@ export function RafflePage() {
   useEffect(() => {
     const getInfo = async () => {
       try {
-        const res = await api.get(`/rifas/${id}`);
+        const idUrl = await id;
+        const res = await api.get(`/rifas/${idUrl}`);
         console.log(res.data)
         setStocks(res.data);
       } catch (err) {

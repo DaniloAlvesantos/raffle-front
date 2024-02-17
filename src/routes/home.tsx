@@ -27,7 +27,7 @@ export function HomePage() {
           {raffle.map((value: raffleProps) => (
             <a
               key={crypto.randomUUID()}
-              onClick={() => navigate(`/stocks/${value.name}`)}
+              onClick={() => navigate(`/stocks/${value.id}`)}
               className="cursor-pointer"
             >
               <CardRaffle {...value} />

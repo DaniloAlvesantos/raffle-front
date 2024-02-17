@@ -74,6 +74,7 @@ export function RafflePage() {
     const getInfo = async () => {
       try {
         const res = await api.get(`/rifas/${id}`);
+        console.log(res.data)
         setStocks(res.data);
       } catch (err) {
         console.error(err);
@@ -81,6 +82,7 @@ export function RafflePage() {
     };
     getInfo();
   }, [id]);
+
   const valor = stocks.price * amount;
 
   // useEffect(() => {

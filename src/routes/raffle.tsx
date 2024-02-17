@@ -71,18 +71,23 @@ export function RafflePage() {
   };
 
   useEffect(() => {
-    const getInfo = async () => {
+
+    const fetchRifa = async () => {
       try {
-        const idUrl = await id;
-        const res = await api.get(`/rifas/${idUrl}`);
-        console.log(!idUrl)
-        console.log(res.data)
-        setStocks(res.data);
-      } catch (err) {
-        console.error(err);
+        // Realiza uma requisição HTTP para buscar os dados da rifa com o ID fornecido
+        const response = await api.get(`/rifas/${id}`); // Substitua '/api/rifas/' pela rota correta da sua API
+        // Atualiza o estado com os dados da rifa
+        setStocks(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar dados da rifa:', error);
       }
     };
-    getInfo();
+
+    // Verifica se o ID está disponível e, se sim, busca os dados da rifa
+    if (id) {
+      fetchRifa();
+    }
+    
   }, [id]);
 
   const valor = stocks.price * amount;

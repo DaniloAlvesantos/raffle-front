@@ -12,7 +12,7 @@ export function UserInfo() {
       if (!reponse.ownNumbers) {
         return console.log("NADA");
       }
-
+      
       setNumbersBought(reponse.ownNumbers);
     };
 
@@ -37,7 +37,9 @@ export function UserInfo() {
                 <p className="text-sm w-[12rem] truncate sm:text-wrap">
                   {value.Rifa.name}
                 </p>
-                <p className="text-xs">Números: {value.numbers}</p>
+                <p className="text-xs text">
+                  Números: {value.numbers.join(",\n")}
+                </p>
                 <p
                   className={`uppercase text-xs ${
                     value.Rifa.status === "aberto"

@@ -21,7 +21,7 @@ export const NavBar: React.FC = () => {
   const navigate = useNavigate() 
   return (
     <nav className="bg-zinc-950 w-full flex flex-row justify-between py-2 px-4 font-Montserrat overflow-hidden">
-      <img src={Logo} className="w-[30rem] -ml-20 -mt-4 h-20 object-cover" />
+      <img src={Logo} className="w-[30rem] -ml-16 sm:-ml-20 -mt-4 h-20 object-cover" />
 
       <span className="flex items-center gap-4">
         <Sheet>

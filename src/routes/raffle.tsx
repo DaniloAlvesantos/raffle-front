@@ -83,11 +83,12 @@ export function RafflePage() {
         console.error('Erro ao buscar dados da rifa:', error);
       }
     };
+    console.log("Pls God")
 
     if (id) {
       fetchRifa();
     }
-
+  
     if(!id) {
       fetchRifa()
     }

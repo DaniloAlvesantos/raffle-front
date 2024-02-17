@@ -75,6 +75,7 @@ export function RafflePage() {
       try {
         const idUrl = await id;
         const res = await api.get(`/rifas/${idUrl}`);
+        console.log(!idUrl)
         console.log(res.data)
         setStocks(res.data);
       } catch (err) {

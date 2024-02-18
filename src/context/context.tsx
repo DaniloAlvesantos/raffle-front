@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { ReactNode, createContext, useCallback, useState } from "react";
 import { initialState } from "./utils";
-import { apiLocal } from "../api/api";
+import { api } from "../api/api";
 
 export type User = {
   name: string;
@@ -36,9 +36,8 @@ export function AuthContextProvider({ children }: AuthContextProvider) {
       setUser({ ...initialState });
     }
     try {
-      const userResponse = await apiLocal.post(`/login/user`, { cpf });
-
-      apiLocal.defaults.headers.common[
+      const userResponse = await api.post(`/login/user`, { cpf });
+      api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userResponse.data.token}`;
 
@@ -62,8 +61,9 @@ export function AuthContextProvider({ children }: AuthContextProvider) {
     };
 
     try {
-      const userResponse = await apiLocal.post("/create/user", data); // Remova as chaves em volta de data
-      apiLocal.defaults.headers.common[
+      const userResponse = await api.post("/create/user", data); // Remova as chaves em volta de data
+      console.log(userResponse.data.token)
+      api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userResponse.data.token}`;
       setUser(userResponse.data.user);

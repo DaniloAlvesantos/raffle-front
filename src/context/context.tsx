@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { useGoogleLogin } from "@react-oauth/google";
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useCallback, useState } from "react";
 import { initialState } from "./utils";
-import { api } from "../api/api";
+import { apiLocal } from "../api/api";
 
 export type User = {
   name: string;
-  email: string;
-  avatarUrl: string;
-  number: string;
+  phone: string;
   cpf: string;
+  email:string;
 };
 
 export interface AuthContextProps {
   Login: () => void;
-  CreateUser: () => void;
+  CreateUser: (userInfo: User) => void;
   setUser: Function;
   user: User;
   userErr: boolean;
@@ -32,52 +30,51 @@ export function AuthContextProvider({ children }: AuthContextProvider) {
   const [userErr, setUserErr] = useState<boolean>(false);
   const [jwt, setJwt] = useState("");
 
-  const Login = useGoogleLogin({
-    onSuccess: async (response) => {
-      const { access_token } = response;
-      try {
-        const userResponse = await api.post("/login/user", {
-          access_token,
-        });
-        api.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${userResponse.data.token}`;
-        setUser(userResponse.data.user);
-        setJwt(userResponse.data.token);
-      } catch (err) {
-        console.log(err);
-        setUserErr(true);
-      } finally {
-        setUserErr(false);
-      }
-    },
-    onError: (err) => console.log(err),
-  });
+  const Login = useCallback(async () => {
+    const { cpf } = user;
+    if (user.name !== "guest") {
+      setUser({ ...initialState });
+    }
+    try {
+      const userResponse = await apiLocal.post(`/login/user`, { cpf });
 
-  const CreateUser = useGoogleLogin({
-    onSuccess: async (response) => {
-      const { access_token } = response;
-      const { cpf, number } = user;
-      try {
-        const userResponse = await api.post("/create/user", {
-          access_token,
-          number,
-          cpf,
-        });
-        api.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${userResponse.data.token}`;
-        setUser(userResponse.data.user);
-        setJwt(userResponse.data.token);
-      } catch (err) {
-        console.log(err);
-        setUserErr(true);
-      } finally {
-        setUserErr(false);
-      }
-    },
-    onError: (err) => console.log(err),
-  });
+      apiLocal.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${userResponse.data.token}`;
+
+      setUser(userResponse.data.user);
+      setJwt(userResponse.data.token);
+    } catch (err) {
+      console.log(err);
+      setUserErr(true);
+    } finally {
+      setUserErr(false);
+    }
+  }, [user]);
+
+  const CreateUser = useCallback(async (userInfo: User) => {
+    const { cpf, phone, name, email } = userInfo;
+    const data = {
+      name,
+      cpf,
+      phone,
+      email
+    };
+
+    try {
+      const userResponse = await apiLocal.post("/create/user", data); // Remova as chaves em volta de data
+      apiLocal.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${userResponse.data.token}`;
+      setUser(userResponse.data.user);
+      setJwt(userResponse.data.token);
+    } catch (err) {
+      console.log(err);
+      setUserErr(true);
+    } finally {
+      setUserErr(false);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

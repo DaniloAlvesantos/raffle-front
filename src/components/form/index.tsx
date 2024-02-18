@@ -1,4 +1,3 @@
-// import { FaGoogle } from "react-icons/fa";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -15,21 +14,27 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
-import { FaGoogle } from "react-icons/fa";
 import { Notification } from "../notification/notification";
+import { MdLogin } from "react-icons/md";
 
 interface InfoProps {
   cpf: string;
-  number: string;
+  phone: string;
+  name: string;
+  email:string;
 }
+
+const initialStateInfo: InfoProps = {
+  cpf: "",
+  phone: "",
+  name: "",
+  email:""
+};
 
 export function Form() {
   const { Login, userErr, CreateUser, setUser, user } = useAuth();
   const { toast } = useToast();
-  const [info, setInfo] = useState<InfoProps>({
-    cpf: "",
-    number: "",
-  });
+  const [info, setInfo] = useState<InfoProps>({ ...initialStateInfo });
 
   function handleSubmitCreate(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,23 +45,21 @@ export function Form() {
       });
     }
 
-    if (!info.number) {
+    if (!info.phone) {
       return toast({
         title: "Telefone invalido",
         description: "Revise o Telefone",
       });
     }
-    setUser({ ...info });
-    CreateUser();
+    CreateUser(info);
   }
 
   useEffect(() => {
-    console.log(user)
-  })
+    console.log(info);
+  });
 
   return (
-    <form
-      onSubmit={handleSubmitCreate}
+    <div
       className="font-Montserrat p-4 flex flex-col items-center"
     >
       <Tabs defaultValue="account" className="">
@@ -69,60 +72,111 @@ export function Form() {
             <CardHeader>
               <CardTitle>Login</CardTitle>
               <CardDescription>
-                Já é um participante ? Faça login com a google direto.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2"></CardContent>
-            <CardFooter>
-              <Button onClick={Login} type="button" className="gap-2">
-                Fazer login com google
-                <FaGoogle color="#121212" width={24} height={24} />
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Cadastrar</CardTitle>
-              <CardDescription>
-                Cadastre-se como um usuario em nossa plataforma.
+                Já é um participante ? Faça login com seu CPF.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <span>
                 <Label>CPF</Label>
                 <Input
-                  onChange={(e) => setInfo({ ...info, cpf: e.target.value })}
+                  onChange={(e) => setUser({ ...user, cpf: e.target.value })}
                   className="w-[14rem] font-Montserrat font-medium"
                   placeholder="Digite seu CPF..."
-                />
-              </span>
-              <span>
-                <Label>Número de Telefone</Label>
-                <Input
-                  onChange={(e) => setInfo({ ...info, number: e.target.value })}
-                  className="w-[14rem] font-Montserrat font-medium"
-                  placeholder="Digite seu número..."
                 />
               </span>
             </CardContent>
             <CardFooter>
               <Button
-                disabled={info.number.length <= 5}
-                type="submit"
+                tabIndex={0}
+                onClick={Login}
+                type="button"
                 className="gap-2"
+                disabled={user.cpf.length < 11}
               >
-                Fazer login com google
-                <FaGoogle color="#121212" width={24} height={24} />
+                Fazer login
+                <MdLogin color="#121212" width={24} height={24} />
               </Button>
             </CardFooter>
           </Card>
         </TabsContent>
+
+        <TabsContent value="password">
+          <form
+            onSubmit={handleSubmitCreate}
+            className="font-Montserrat p-4 flex flex-col items-center"
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Cadastrar</CardTitle>
+                <CardDescription>
+                  Cadastre-se como um usuario em nossa plataforma.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <span>
+                  <Label>Nome Completo</Label>
+                  <Input
+                    onChange={(e) => setInfo({ ...info, name: e.target.value })}
+                    className="w-[14rem] font-Montserrat font-medium"
+                    placeholder="Digite seu número..."
+                  />
+                </span>
+                <span>
+                  <Label>CPF</Label>
+                  <Input
+                    onChange={(e) => setInfo({ ...info, cpf: e.target.value })}
+                    className="w-[14rem] font-Montserrat font-medium"
+                    placeholder="Digite seu CPF..."
+                  />
+                </span>
+                <span>
+                  <Label>Número de Telefone</Label>
+                  <Input
+                    onChange={(e) =>
+                      setInfo({ ...info, phone: e.target.value })
+                    }
+                    className="w-[14rem] font-Montserrat font-medium"
+                    placeholder="Digite seu número..."
+                  />
+                </span>
+                <span>
+                  <Label>Email</Label>
+                  <Input
+                    onChange={(e) =>
+                      setInfo({ ...info, email: e.target.value })
+                    }
+                    type="email"
+                    className="w-[14rem] font-Montserrat font-medium"
+                    placeholder="Digite seu número..."
+                  />
+                </span>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  tabIndex={0}
+                  disabled={info.phone.length <= 6}
+                  type="submit"
+                  className="gap-2"
+                >
+                  Criar conta
+                  <MdLogin color="#121212" width={24} height={24} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </TabsContent>
       </Tabs>
 
-      {userErr ? <Notification title="Login" description="Erro ao cadastrar/login." variant="destructive" duration={10000} /> : <Toaster />}
-    </form>
+      {userErr ? (
+        <Notification
+          title="Login"
+          description="Erro ao cadastrar/login."
+          variant="destructive"
+          duration={10000}
+        />
+      ) : (
+        <Toaster />
+      )}
+    </div>
   );
 }

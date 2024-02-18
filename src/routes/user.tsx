@@ -6,7 +6,7 @@ export function UserPage() {
   const { user } = useAuth();
 
   return (
-    <div className="flex-1 pb-32">
+    <div className="flex-1 min-h-screen pb-32">
       {user.name !== "guest" ? <UserInfo /> : <Form />}
     </div>
   );

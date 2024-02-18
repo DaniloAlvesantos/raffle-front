@@ -7,10 +7,12 @@ export function Footer() {
   return (
     <footer className="bg-zinc-950 h-auto w-full font-Montserrat p-4 relative mt-auto">
       <div className="w-full h-full">
-        <img
-          src={LogoAgency}
-          className="w-[3rem] h-[3rem] md:w-[5.5rem] md:h-[3.7rem] object-contain absolute -top-[3rem] right-2 md:-top-[4rem] md:-right-0 rounded-tl-md"
-        />
+        <a href="https://www.instagram.com/agencianokopy/" target="_blank">
+          <img
+            src={LogoAgency}
+            className="w-[3rem] h-[3rem] md:w-[5.5rem] md:h-[3.7rem] object-contain absolute -top-[3rem] right-2 md:-top-[4rem] md:-right-0 rounded-tl-md"
+          />
+        </a>
         <ul className="flex flex-col">
           <li className="flex flex-col items-center justify-center gap-4">
             <p className="text-sm">Participe de nosso grupo de WhatsApp</p>

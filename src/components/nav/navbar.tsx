@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 import { FiUser } from "react-icons/fi";
 import { CiMenuFries } from "react-icons/ci";
 import {
@@ -14,14 +13,19 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { useNavigate } from "react-router-dom";
-import Logo from "@/assets/KALOVE PREMIOS BRANCO FOSCO .png"
+import Logo from "@/assets/KALOVE PREMIOS BRANCO FOSCO .png";
 
 export const NavBar: React.FC = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
+
   return (
     <nav className="bg-zinc-950 w-full flex flex-row justify-between py-2 px-4 font-Montserrat overflow-hidden">
-      <img src={Logo} className="w-[30rem] -ml-16 sm:-ml-20 -mt-4 h-20 object-cover" />
+      <a href="https://www.instagram.com/kaloveoficial/" target="_blank">
+        <img
+          src={Logo}
+          className="w-[30rem] -ml-16 sm:-ml-20 -mt-4 h-20 object-cover"
+        />
+      </a>
 
       <span className="flex items-center gap-4">
         <Sheet>
@@ -47,9 +51,10 @@ export const NavBar: React.FC = () => {
             </SheetFooter>
           </SheetContent>
         </Sheet>
-        <Button className="hidden md:block" onClick={() => navigate("/")}>Home</Button>
+        <Button className="hidden md:block" onClick={() => navigate("/")}>
+          Home
+        </Button>
         <Avatar className="cursor-pointer" onClick={() => navigate("/user")}>
-          <AvatarImage src={user.avatarUrl} alt="user picture" />
           <AvatarFallback>
             <FiUser color="white" size={30} />
           </AvatarFallback>

@@ -33,7 +33,7 @@ export function RafflePage() {
   const [linkCard, setLinkCard] = useState<LinkPaymentCardProps>({
     ...initialStateLinkCard,
   });
-  // const [checkPay, setCheckPay] = useState(false);
+  const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,7 +55,7 @@ export function RafflePage() {
       const payResponse = await createPix({ ...data });
 
       console.log(payResponse);
-      // setCheckPay(true);
+      setShow(true);
       return setLink(payResponse);
     }
     return navigate("/user");
@@ -76,14 +76,11 @@ export function RafflePage() {
     const fetchRifa = async () => {
       try {
         const response = await api.get(`/rifas/${id}`); 
-        console.log(response.status)
         setStocks(response.data);
-        console.log(response)
       } catch (error) {
         console.error('Erro ao buscar dados da rifa:', error);
       }
     };
-    console.log("Pls God");
 
     if (id) {
       fetchRifa();
@@ -223,7 +220,7 @@ export function RafflePage() {
             </a>
           )}
 
-          {link.point_of_interaction.transaction_data.qr_code !== "" && (
+          {show && (
             <CardShad.Card className="w-[95%] sm:w-[20rem] flex flex-col items-center text-center justify-center my-4 font-Montserrat bg-zinc-900">
               <CardShad.CardHeader>
                 <CardShad.CardTitle>Pix Gerado com Sucesso.</CardShad.CardTitle>

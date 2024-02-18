@@ -1,5 +1,5 @@
 import { useEffect, useState, Suspense } from "react";
-import { apiLocal } from "@/api/api";
+import { api } from "@/api/api";
 import { numbersProps } from "@/types/numbers";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -9,7 +9,7 @@ export function UserInfo() {
 
   useEffect(() => {
     const getNumbers = async () => {
-      const numbers = await apiLocal.get("/numbers/user");
+      const numbers = await api.get("/numbers/user");
       const reponse = numbers.data;
       if (!reponse.ownNumbers) {
         return console.log("NADA");

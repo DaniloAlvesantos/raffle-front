@@ -26,7 +26,8 @@ export const CardRaffle: React.FC<CardRaffleProps> = (props) => {
           <div className="relative">
             <img
               src={picture}
-              className="w-full h-[8rem] md:h-[15rem] object-cover object-[top] rounded-sm"
+              loading="eager"
+              className="w-full h-[10rem] md:h-[15rem] object-cover object-[center_22%] rounded-sm"
               alt="image rifa"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
@@ -39,7 +40,11 @@ export const CardRaffle: React.FC<CardRaffleProps> = (props) => {
       <CardContent className="p-4">
         <ul className="text-xs md:text-sm">
           <li>Prêmio: {reward}</li>
-          <li>{startedAtDate.toLocaleDateString()}</li>
+          <li>
+            {
+              status === "aberto" ? "" : startedAtDate.toLocaleDateString()
+            }
+          </li>
           <li className={`${status === "fechado" ? "bg-red-600 p-2 rounded" : "bg-green-500 p-2 rounded"} w-[8rem] text-center uppercase mt-2 font-medium`}>{status}</li>
         </ul>
       </CardContent>

@@ -23,7 +23,7 @@ export const NavBar: React.FC = () => {
       <a href="https://www.instagram.com/kaloveoficial/" target="_blank">
         <img
           src={Logo}
-          className="w-[30rem] -ml-16 sm:-ml-20 -mt-4 h-20 object-cover"
+          className="w-[30rem] -ml-14 sm:-ml-20 -mt-4 h-20 object-cover"
         />
       </a>
 

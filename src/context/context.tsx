@@ -37,7 +37,7 @@ export function AuthContextProvider({ children }: AuthContextProvider) {
     }
     try {
       const userResponse = await api.post(`/login/user`, { cpf });
-      console.log(userResponse.data.token)
+      
       api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userResponse.data.token}`;

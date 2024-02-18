@@ -123,7 +123,7 @@ export function RafflePage() {
             loading="eager"
           />
         </header>
-        <main className="flex items-center justify-center flex-col">
+        <main className="flex items-center justify-center flex-col my-2">
           <div className="bg-zinc-950 rounded p-4 w-[95%] sm:w-[38rem] md:w-[45rem] md:-mt-16 mb-2 text-center border-[1px]">
             <h2 className="font-medium text-lg text-center text-ellipsis">
               {stocks.name}

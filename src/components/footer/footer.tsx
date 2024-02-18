@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="bg-zinc-950 h-auto w-full font-Montserrat p-4 relative mt-auto">
       <div className="w-full h-full">
-        <a href="https://www.instagram.com/agencianokopy/" target="_blank">
+        <a href="https://wa.me/5555199943372?text=Ol%C3%A1+Gustavo%2C+vim+pelo+site+de+rifas+do+Kalove." target="_blank">
           <img
             src={LogoAgency}
             className="w-[3rem] h-[3rem] md:w-[5.5rem] md:h-[3.7rem] object-contain absolute -top-[3rem] right-2 md:-top-[4rem] md:-right-0 rounded-tl-md"

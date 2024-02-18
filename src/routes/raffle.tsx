@@ -51,7 +51,7 @@ export function RafflePage() {
         console.log(cardResponse);
         return setLinkCard(cardResponse);
       }
-
+      console.log(data)
       const payResponse = await createPix({ ...data });
 
       console.log(payResponse);
